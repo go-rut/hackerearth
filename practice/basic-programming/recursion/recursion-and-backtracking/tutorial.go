@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 var upperlim = 1
@@ -12,10 +13,13 @@ var a []int
 
 func main() {
 	fmt.Scanf("%d", &n)
+	if e := judgeNum(n); e != nil {
+		return
+	}
 	upperlim = (upperlim << uint(n)) - 1
 	test(0, 0, 0)
 	if sum == 0 {
-		fmt.Println("NO")
+		fmt.Println("Not possible")
 	}
 }
 
@@ -32,11 +36,11 @@ func test(row, ld, rd int) {
 	} else {
 		sum++
 		print()
+		os.Exit(0)
 	}
 }
 
 func print() {
-	fmt.Println("YES")
 	for i := 0; i < len(a); i++ {
 		num := getCount(a[i])
 		for j := 0; j < n; j++ {
@@ -59,4 +63,11 @@ func getCount(n int) (count int) {
 		count++
 	}
 	return
+}
+
+func judgeNum(i int) error {
+	if i < 1 || i > 10 {
+		return fmt.Errorf("%d is out of 1 to 10", i)
+	}
+	return nil
 }
